@@ -1,7 +1,23 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
+import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
 import HTMLFlipBook from "react-pageflip";
 import { BLOGS } from "../blogs.js";
 import avatarSrc from "../assets/danny.png";
+
+// Matches the `md` breakpoint used elsewhere — react-pageflip's 400px cover
+// gets clipped on phones, so below `md` we render a simple stacked list.
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia(`(max-width: ${breakpoint - 1}px)`).matches;
+  });
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
+    const onChange = (e) => setIsMobile(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, [breakpoint]);
+  return isMobile;
+}
 
 const COVER_SRC = "/assets/blog-cover.jpg";
 
@@ -167,14 +183,89 @@ const BlogPage = forwardRef(function BlogPage({ blog, pageNumber, total }, ref) 
   );
 });
 
+// ── Mobile stacked card (no flipbook) ────────────────────────────────────
+function MobileBlogCard({ blog }) {
+  const isExternal = blog.author === "external";
+  return (
+    <a
+      href={blog.url}
+      target={isExternal ? "_blank" : "_self"}
+      rel="noopener noreferrer"
+      className="group relative block overflow-hidden rounded-2xl bg-[#fbf6ec] ring-1 ring-zinc-200/80 shadow-[0_6px_24px_-8px_rgba(0,0,0,0.12)] active:scale-[0.99] transition-transform"
+    >
+      <div className="relative h-44 overflow-hidden">
+        <img
+          src={blog.image}
+          alt=""
+          loading="lazy"
+          className="absolute inset-0 h-full w-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#fbf6ec] via-transparent to-transparent" />
+        <div className="absolute top-3 left-3">
+          <span
+            className="inline-flex items-center rounded-full bg-white/85 backdrop-blur px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.14em] ring-1 ring-zinc-200"
+            style={{ color: blog.accent }}
+          >
+            {blog.category}
+          </span>
+        </div>
+      </div>
+      <div className="p-5">
+        <h3 className="font-editorial text-xl leading-[1.2] text-zinc-900">
+          {blog.title}
+        </h3>
+        <p className="mt-2 text-[13.5px] leading-relaxed text-zinc-600 line-clamp-4">
+          {blog.excerpt}
+        </p>
+        <div className="mt-4 flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            {isExternal ? (
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-zinc-100 ring-1 ring-zinc-200 text-base">
+                📖
+              </div>
+            ) : (
+              <img
+                src={avatarSrc}
+                alt="Danny"
+                className="h-8 w-8 rounded-full object-cover ring-2 ring-white"
+                style={{ objectPosition: "center 28%" }}
+              />
+            )}
+            <div className="flex flex-col leading-tight">
+              <span className="text-[11px] font-semibold text-zinc-800">
+                {isExternal ? blog.externalAuthor : "Danny"}
+              </span>
+              <span className="text-[10px] text-zinc-400">{blog.date}</span>
+            </div>
+          </div>
+          <span
+            className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-[11px] font-semibold text-white"
+            style={{ background: blog.accent }}
+          >
+            {isExternal ? "Read →" : "Read →"}
+          </span>
+        </div>
+      </div>
+    </a>
+  );
+}
+
 export const BlogMagazineSection = forwardRef(function BlogMagazineSection(
   _,
   ref
 ) {
   const flipBookRef = useRef(null);
+  const isMobile = useIsMobile();
 
   useImperativeHandle(ref, () => ({
     flipTo: (pageIdx) => {
+      if (isMobile) {
+        // On mobile the FileTree blog links scroll to the section; scrolling
+        // to an individual card would require per-blog anchors, which aren't
+        // worth the complexity for now.
+        document.getElementById("blog")?.scrollIntoView({ behavior: "smooth" });
+        return;
+      }
       const api = flipBookRef.current?.pageFlip?.();
       if (!api) return;
       try {
@@ -188,7 +279,7 @@ export const BlogMagazineSection = forwardRef(function BlogMagazineSection(
   return (
     <section
       id="blog"
-      className="relative z-10 px-8 py-20 scroll-mt-8 overflow-hidden"
+      className="relative z-10 px-5 md:px-8 py-20 scroll-mt-8 overflow-hidden"
     >
       <div className="relative max-w-6xl mx-auto">
         <div className="mb-12 text-center">
@@ -199,44 +290,68 @@ export const BlogMagazineSection = forwardRef(function BlogMagazineSection(
             Piece of mind
           </h2>
           <p className="mt-3 max-w-xl mx-auto text-zinc-500 leading-relaxed">
-            A small magazine of things I've written and pieces by others I keep
-            coming back to. Drag a corner to turn the page.
+            <span className="md:hidden">A small collection of things I&apos;ve written and pieces by others I keep coming back to.</span>
+            <span className="hidden md:inline">A small magazine of things I&apos;ve written and pieces by others I keep coming back to. Drag a corner to turn the page.</span>
           </p>
         </div>
 
-        <div className="flex justify-center">
-          <div className="magazine-shadow">
-            <HTMLFlipBook
-              ref={flipBookRef}
-              width={400}
-              height={560}
-              size="fixed"
-              minWidth={300}
-              maxWidth={500}
-              minHeight={400}
-              maxHeight={700}
-              maxShadowOpacity={0.45}
-              drawShadow
-              showCover
-              flippingTime={700}
-              usePortrait={false}
-              mobileScrollSupport
-              className="magazine-flipbook"
-              style={{ background: "transparent" }}
-            >
-              <Cover />
-              {BLOGS.map((blog, i) => (
-                <BlogPage
-                  key={blog.id}
-                  blog={blog}
-                  pageNumber={i + 1}
-                  total={BLOGS.length}
-                />
-              ))}
-              <BackCover />
-            </HTMLFlipBook>
+        {isMobile ? (
+          <div className="flex flex-col gap-5">
+            {BLOGS.map((blog) => (
+              <MobileBlogCard key={blog.id} blog={blog} />
+            ))}
+            <div className="mt-4 rounded-2xl bg-gradient-to-br from-zinc-100 to-zinc-200 p-6 text-center">
+              <p className="text-[11px] uppercase tracking-[0.22em] text-zinc-400">
+                Piece of Mind
+              </p>
+              <p className="mt-2 font-display text-xl text-zinc-700">Vol. 01</p>
+              <p className="mt-3 text-xs text-zinc-500 leading-relaxed">
+                More entries arriving as I write them. Reach me at{" "}
+                <a
+                  href="mailto:dfmreyes02@gmail.com"
+                  className="font-mono text-zinc-700 underline decoration-zinc-300 decoration-1 underline-offset-2 hover:text-zinc-900"
+                >
+                  dfmreyes02@gmail.com
+                </a>{" "}
+                if a piece sparks something.
+              </p>
+            </div>
           </div>
-        </div>
+        ) : (
+          <div className="flex justify-center">
+            <div className="magazine-shadow">
+              <HTMLFlipBook
+                ref={flipBookRef}
+                width={400}
+                height={560}
+                size="fixed"
+                minWidth={300}
+                maxWidth={500}
+                minHeight={400}
+                maxHeight={700}
+                maxShadowOpacity={0.45}
+                drawShadow
+                showCover
+                flippingTime={700}
+                usePortrait={false}
+                mobileScrollSupport
+                className="magazine-flipbook"
+                style={{ background: "transparent" }}
+              >
+                <Cover />
+                {BLOGS.map((blog, i) => (
+                  <BlogPage
+                    key={blog.id}
+                    blog={blog}
+                    pageNumber={i + 1}
+                    total={BLOGS.length}
+                  />
+                ))}
+                <BackCover />
+              </HTMLFlipBook>
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );

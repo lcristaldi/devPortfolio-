@@ -9,7 +9,7 @@ export function BehindTheCodeSection() {
   return (
     <section
       id="behind-the-code"
-      className="relative z-10 px-8 py-20 scroll-mt-8 overflow-hidden"
+      className="relative z-10 px-5 md:px-8 py-20 scroll-mt-8 overflow-hidden"
     >
       <div className="relative max-w-3xl mx-auto">
         <div className="mb-10">

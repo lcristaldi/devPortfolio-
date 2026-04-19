@@ -58,7 +58,7 @@ export default function TechCarousel() {
       {/* Soft grid backdrop */}
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,0,0,0.04)_1px,transparent_1px)] [background-size:24px_24px] opacity-40" />
 
-      <div className="relative max-w-7xl mx-auto px-8 text-center">
+      <div className="relative max-w-7xl mx-auto px-5 md:px-8 text-center">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">
           Technical skills
         </p>

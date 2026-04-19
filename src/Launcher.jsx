@@ -64,7 +64,7 @@ const NAV_TREE = [
 
 function AboutSection() {
   return (
-    <section id="about" className="relative z-10 px-8 py-20 scroll-mt-8 overflow-hidden">
+    <section id="about" className="relative z-10 px-5 md:px-8 py-20 scroll-mt-8 overflow-hidden">
       <BrushStrokes palette="warm" variant={1} seed={2} />
       <div className="relative max-w-6xl mx-auto">
         <div className="mb-14">
@@ -147,7 +147,7 @@ function AboutSection() {
 
 function ExperienceSection() {
   return (
-    <section id="experience" className="relative z-10 px-8 py-20 scroll-mt-8 overflow-hidden">
+    <section id="experience" className="relative z-10 px-5 md:px-8 py-20 scroll-mt-8 overflow-hidden">
       <BrushStrokes palette="quiet" variant={2} seed={3} />
       <div className="relative">
         <div className="text-center max-w-2xl mx-auto">
@@ -169,7 +169,7 @@ function ExperienceSection() {
 
 function ContactSection() {
   return (
-    <section id="contact" className="relative z-10 px-8 py-20 scroll-mt-8 overflow-hidden">
+    <section id="contact" className="relative z-10 px-5 md:px-8 py-20 scroll-mt-8 overflow-hidden">
       <BrushStrokes palette="cool" variant={0} seed={4} />
       <div className="relative max-w-2xl mx-auto text-center">
         <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">Contact</p>
@@ -237,6 +237,37 @@ function useScrollProgress(threshold = 300) {
     return () => window.removeEventListener("scroll", onScroll);
   }, [threshold]);
   return progress;
+}
+
+// ── Media-query hooks ────────────────────────────────────────────────────
+// Mobile = below Tailwind's `md` breakpoint (768px). Keeping this number
+// in sync with the `md:` utilities used for mobile fallbacks.
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia(`(max-width: ${breakpoint - 1}px)`).matches;
+  });
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
+    const onChange = (e) => setIsMobile(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, [breakpoint]);
+  return isMobile;
+}
+
+function usePrefersReducedMotion() {
+  const [reduced, setReduced] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  });
+  useEffect(() => {
+    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const onChange = (e) => setReduced(e.matches);
+    mq.addEventListener("change", onChange);
+    return () => mq.removeEventListener("change", onChange);
+  }, []);
+  return reduced;
 }
 
 // ── Icons (inline SVG to avoid a dependency) ──────────────────────────────
@@ -1436,6 +1467,206 @@ function Card({ project, live, expanded, onHover, onLaunch, onWake, onIOSLaunch 
   );
 }
 
+// ── Mobile Nav ────────────────────────────────────────────────────────────
+// Hamburger + slide-in drawer carrying the same NAV_TREE the desktop sidebar
+// uses. Shown only below `lg` (where the sidebar is hidden).
+
+function MobileNav({ onSelect }) {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prev;
+    };
+  }, [open]);
+
+  const handleSelect = (node) => {
+    onSelect(node);
+    setOpen(false);
+  };
+
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        aria-label="Open navigation"
+        className="lg:hidden fixed top-3 right-3 z-40 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/90 backdrop-blur ring-1 ring-zinc-200 shadow-md text-zinc-700 active:scale-95 transition-transform"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+          <path d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+
+      {open && (
+        <div
+          className="lg:hidden fixed inset-0 z-50 bg-black/40 backdrop-blur-sm"
+          onClick={() => setOpen(false)}
+          role="presentation"
+        >
+          <div
+            className="absolute top-0 right-0 h-full w-[85%] max-w-[22rem] bg-zinc-50 shadow-2xl p-4 overflow-y-auto"
+            onClick={(e) => e.stopPropagation()}
+            role="dialog"
+            aria-label="Site navigation"
+          >
+            <div className="mb-4 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="relative shrink-0">
+                  <div className="absolute -inset-0.5 rounded-full bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 opacity-70 blur-[3px]" />
+                  <img
+                    src={avatarSrc}
+                    alt="Danny"
+                    className="relative h-10 w-10 rounded-full object-cover border-2 border-white shadow-md"
+                    style={{ objectPosition: "center 28%" }}
+                  />
+                </div>
+                <div className="flex flex-col leading-tight">
+                  <span className="text-sm font-semibold text-zinc-900">Danny</span>
+                  <span className="font-mono text-[11px] uppercase tracking-[0.18em] text-zinc-400">
+                    portfolio
+                  </span>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setOpen(false)}
+                aria-label="Close navigation"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full text-zinc-500 hover:bg-zinc-200"
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+                  <path d="M6 6l12 12M6 18L18 6" />
+                </svg>
+              </button>
+            </div>
+            <FileTree data={NAV_TREE} onSelect={handleSelect} />
+          </div>
+        </div>
+      )}
+    </>
+  );
+}
+
+// ── Mobile project card ──────────────────────────────────────────────────
+// Replaces the book-spine Card on <md screens. Shows the scene image,
+// title, description, tech pills, and action buttons in a stacked layout.
+
+function MobileCard({ project, live, onLaunch, onWake, onIOSLaunch }) {
+  const isRemote = project.type === "web-remote";
+  const isIOS = project.type === "ios-appetize";
+  const isLive = isRemote || live;
+
+  return (
+    <article className="relative rounded-2xl overflow-hidden shadow-lg ring-1 ring-black/5 bg-white">
+      <div className="relative h-44 overflow-hidden">
+        <ProjectScene project={project} />
+        {project.scene && (
+          <img
+            src={project.scene}
+            alt=""
+            loading="lazy"
+            className="absolute inset-0 h-full w-full object-cover"
+            style={{ objectPosition: project.scenePosition || "center 55%" }}
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+            }}
+          />
+        )}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-black/25" />
+        <div className="absolute top-3 right-3">
+          <StatusPill live={live} remote={isRemote} iosDemo={isIOS} />
+        </div>
+        <div className="absolute bottom-3 left-4 right-4 text-white">
+          <h3 className="font-editorial text-2xl font-semibold drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)]">
+            {project.name}
+          </h3>
+          <p className="font-editorial italic text-[13px] drop-shadow-[0_1px_4px_rgba(0,0,0,0.5)]">
+            {project.tagline}
+          </p>
+        </div>
+      </div>
+
+      <div className="p-5">
+        <p className="text-[14px] leading-relaxed text-zinc-600">
+          {project.description}
+        </p>
+
+        <div className="mt-3 flex flex-wrap gap-1.5">
+          {project.stack.map((t) => (
+            <span
+              key={t}
+              className="rounded-full bg-zinc-100 px-2.5 py-0.5 text-[11px] font-medium text-zinc-700 ring-1 ring-zinc-200/80"
+            >
+              {t}
+            </span>
+          ))}
+        </div>
+
+        <div className="mt-5 flex flex-wrap gap-2">
+          {isIOS ? (
+            <button
+              type="button"
+              onClick={() => onIOSLaunch?.(project)}
+              className="inline-flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white shadow active:scale-95 transition-transform"
+            >
+              Launch Demo {icons.arrow}
+            </button>
+          ) : project.prodUrl ? (
+            <a
+              href={project.prodUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white shadow active:scale-95 transition-transform"
+            >
+              Visit Site {icons.arrow}
+            </a>
+          ) : isLive ? (
+            <button
+              type="button"
+              onClick={() => onLaunch(project)}
+              className="inline-flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-2.5 text-sm font-semibold text-white shadow active:scale-95 transition-transform"
+            >
+              Launch Demo {icons.arrow}
+            </button>
+          ) : (
+            <button
+              type="button"
+              onClick={() => onWake(project)}
+              className="inline-flex items-center gap-2 rounded-full bg-amber-100 px-5 py-2.5 text-sm font-semibold text-amber-900 ring-1 ring-amber-300 active:scale-95 transition-transform"
+            >
+              {icons.zap} Wake Up
+            </button>
+          )}
+
+          {project.githubUrl && project.githubUrl !== "#" && (
+            <a
+              href={project.githubUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-zinc-900 ring-1 ring-zinc-200 active:scale-95 transition-transform"
+            >
+              {icons.github} GitHub
+            </a>
+          )}
+          {isIOS && project.testflightUrl && project.testflightUrl !== "#" && (
+            <a
+              href={project.testflightUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-full bg-white px-4 py-2.5 text-sm font-semibold text-zinc-900 ring-1 ring-zinc-200 active:scale-95 transition-transform"
+            >
+              {icons.apple} TestFlight
+            </a>
+          )}
+        </div>
+      </div>
+    </article>
+  );
+}
+
 // ── Main Launcher ─────────────────────────────────────────────────────────
 
 export default function Launcher() {
@@ -1443,6 +1674,11 @@ export default function Launcher() {
   const [expanded, setExpanded] = useState(0);
   const scrollProgress = useScrollProgress(400);
   const projectsRef = useRef(null);
+  const isMobile = useIsMobile();
+  const prefersReducedMotion = usePrefersReducedMotion();
+  // Heavy effects (sparkle particle field, drifting birds) are desktop-only —
+  // mobile gets a static background so the page feels responsive.
+  const heavyFX = !isMobile && !prefersReducedMotion;
 
   const launch = (p) => {
     const target = p.prodUrl ?? p.url;
@@ -1485,18 +1721,23 @@ export default function Launcher() {
 
   return (
     <div className="min-h-screen lg:pl-[22rem]">
-      {/* ── Fixed sparkles background — covers full viewport at all scroll positions ──── */}
-      <div className="pointer-events-none fixed inset-0 z-0">
-        <SparklesCore
-          background="transparent"
-          minSize={0.5}
-          maxSize={1.2}
-          particleDensity={70}
-          className="w-full h-full"
-          particleColor="#a855f7"
-          speed={1}
-        />
-      </div>
+      {/* ── Fixed sparkles background (desktop only for perf) ──────── */}
+      {heavyFX && (
+        <div className="pointer-events-none fixed inset-0 z-0">
+          <SparklesCore
+            background="transparent"
+            minSize={0.5}
+            maxSize={1.2}
+            particleDensity={70}
+            className="w-full h-full"
+            particleColor="#a855f7"
+            speed={1}
+          />
+        </div>
+      )}
+
+      {/* ── Mobile hamburger + drawer ─────────────────────────────── */}
+      <MobileNav onSelect={handleNavSelect} />
 
       {/* ── File-tree sidebar navigation ──────────────────────────── */}
       <aside className="hidden lg:block fixed top-0 left-0 h-screen w-[22rem] z-20 p-4 overflow-y-auto">
@@ -1525,12 +1766,12 @@ export default function Launcher() {
       <FloatingAvatar visible={scrollProgress > 0.8} />
 
       {/* ── Hero / Landing ────────────────────────────────────────── */}
-      <section id="hero" className="hero-gradient relative flex min-h-screen flex-col items-center justify-center px-8 overflow-hidden scroll-mt-0">
+      <section id="hero" className="hero-gradient relative flex min-h-screen flex-col items-center justify-center px-5 md:px-8 overflow-hidden scroll-mt-0">
         {/* Painterly brush strokes behind content */}
         <BrushStrokes palette="hero" variant={0} seed={1} />
 
-        {/* Painterly birds drifting around the hero */}
-        <Birds />
+        {/* Painterly birds drifting around the hero — desktop only */}
+        {heavyFX && <Birds />}
 
         {/* Content */}
         <div className="relative z-20 flex flex-col items-center text-center max-w-2xl animate-fade-in-up">
@@ -1594,7 +1835,7 @@ export default function Launcher() {
         <BrushStrokes palette="triad" variant={1} seed={5} />
 
         {/* Header */}
-        <header className="relative max-w-7xl mx-auto px-8 pt-20 pb-12 text-center">
+        <header className="relative max-w-7xl mx-auto px-5 md:px-8 pt-20 pb-12 text-center">
           <p className="text-xs font-semibold uppercase tracking-[0.2em] text-zinc-400">
             Projects
           </p>
@@ -1602,7 +1843,8 @@ export default function Launcher() {
             What I&apos;ve Built
           </h2>
           <p className="mt-3 text-base text-zinc-500 max-w-lg mx-auto">
-            Hover to explore, click to launch.
+            <span className="md:hidden">Tap a card to launch.</span>
+            <span className="hidden md:inline">Hover to explore, click to launch.</span>
           </p>
           <div className="mt-6 inline-flex items-center gap-2.5 rounded-full bg-white px-4 py-2 text-sm font-medium text-zinc-600 shadow-sm ring-1 ring-zinc-200/80">
             <span
@@ -1615,8 +1857,27 @@ export default function Launcher() {
         </header>
 
         {/* Cards */}
-        <main className="relative mx-auto max-w-7xl px-8 pb-20">
-          <div className="flex w-full items-stretch justify-center gap-0">
+        <main className="relative mx-auto max-w-7xl px-5 md:px-8 pb-20">
+          {/* Mobile: vertical stack of full-width cards */}
+          <div className="md:hidden flex flex-col gap-6">
+            {PROJECTS.map((p) => (
+              <MobileCard
+                key={p.id}
+                project={p}
+                live={
+                  p.type === "web-remote" || p.type === "ios-appetize"
+                    ? true
+                    : !!status[p.id]?.live
+                }
+                onLaunch={launch}
+                onWake={wake}
+                onIOSLaunch={openIOSDemo}
+              />
+            ))}
+          </div>
+
+          {/* Desktop: painterly bookshelf */}
+          <div className="hidden md:flex w-full items-stretch justify-center gap-0">
             {PROJECTS.map((p, idx) => (
               <Card
                 key={p.id}
@@ -1651,7 +1912,7 @@ export default function Launcher() {
       <ContactSection />
 
       {/* ── Footer ────────────────────────────────────────────────── */}
-      <footer className="relative z-10 mx-auto max-w-7xl border-t border-zinc-200 px-8 py-6">
+      <footer className="relative z-10 mx-auto max-w-7xl border-t border-zinc-200 px-5 md:px-8 py-6">
         <div className="flex items-center justify-between text-xs text-zinc-400">
           <span>Built with React + Vite</span>
           <span>Heartbeat on :4317</span>

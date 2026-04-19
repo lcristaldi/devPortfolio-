@@ -5,11 +5,21 @@ const ENTRIES = [
   {
     kind: "work",
     dateLabel: "Aug 2024 — Present",
-    org: "SAIC / SDA",
-    role: "Full-Stack Software Developer",
+    org: "SAIC / SDA (Subcontractor)",
+    role: "Full-Stack AI Engineer · SDA PWSA Program",
     description:
-      "Shipping mission-focused tooling for the Space Development Agency. End-to-end work across React frontends, Python services, and deployment pipelines.",
-    tags: ["React", "Python", "FastAPI", "TypeScript"],
+      "Full-stack AI engineering inside the Space Development Agency's Proliferated Warfighter Space Architecture. Integrating advanced AI models into mission-critical operational systems — architecting API surfaces, wiring complex state management for dynamic multi-docking interfaces, and bridging backend logic with user-centric frontend design. Unblocking cross-functional teams in a rapid-spiral development cycle.",
+    tags: [
+      "React",
+      "Next.js",
+      "Python",
+      "FastAPI",
+      "TypeScript",
+      "PostgreSQL",
+      "AI Integration",
+      "State Management",
+      "Mission-Critical Systems",
+    ],
     accent: "#1b4b75", // watercolor blue
   },
   {
