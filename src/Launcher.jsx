@@ -14,6 +14,7 @@ import BrushStrokes from "./components/BrushStrokes.jsx";
 import Birds from "./components/Birds.jsx";
 import ContactIcons from "./components/ContactIcons.jsx";
 import ExperienceTimeline from "./components/ExperienceTimeline.jsx";
+import { useLowPower } from "./hooks/useLowPower.js";
 
 // ── File-tree navigation data ─────────────────────────────────────────────
 
@@ -63,6 +64,7 @@ const NAV_TREE = [
 // ── Placeholder portfolio sections ────────────────────────────────────────
 
 function AboutSection() {
+  const isMobile = useLowPower();
   return (
     <section id="about" className="relative z-10 px-5 md:px-8 py-20 scroll-mt-8 overflow-hidden">
       <BrushStrokes palette="warm" variant={1} seed={2} />
@@ -108,22 +110,30 @@ function AboutSection() {
             </p>
           </div>
 
-          {/* Right: desk with person floating in front, pointing left */}
-          <div className="relative w-full flex justify-center lg:justify-end">
-            <div className="relative w-full max-w-[460px] aspect-square">
-              <img
-                src={deskSrc}
-                alt=""
-                aria-hidden="true"
-                className="absolute inset-0 w-full h-full object-contain"
-              />
-              <img
-                src={dannyIllustratedSrc}
-                alt="Illustration of Danny"
-                className="absolute z-10 h-[115%] w-auto -bottom-[8%] -left-[14%] drop-shadow-[0_25px_35px_rgba(0,0,0,0.22)] animate-float-slow"
-              />
+          {/* Right: desk with person floating in front, pointing left.
+              Skipped on mobile — the two PNGs are ~3MB combined and the
+              hero already shows Danny's face. */}
+          {!isMobile && (
+            <div className="relative w-full flex justify-center lg:justify-end">
+              <div className="relative w-full max-w-[460px] aspect-square">
+                <img
+                  src={deskSrc}
+                  alt=""
+                  aria-hidden="true"
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute inset-0 w-full h-full object-contain"
+                />
+                <img
+                  src={dannyIllustratedSrc}
+                  alt="Illustration of Danny"
+                  loading="lazy"
+                  decoding="async"
+                  className="absolute z-10 h-[115%] w-auto -bottom-[8%] -left-[14%] drop-shadow-[0_25px_35px_rgba(0,0,0,0.22)] animate-float-slow"
+                />
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Quote block — bottom, centered */}
@@ -228,47 +238,21 @@ async function wakeUp(id) {
 
 function useScrollProgress(threshold = 300) {
   const [progress, setProgress] = useState(0);
+  const lowPower = useLowPower();
   useEffect(() => {
+    // Skip scroll-driven hero parallax / fade on mobile — content stays at
+    // its initial state and the scroll listener never attaches.
+    if (lowPower) return;
     const onScroll = () => {
       const y = window.scrollY;
       setProgress(Math.min(y / threshold, 1));
     };
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
-  }, [threshold]);
+  }, [threshold, lowPower]);
   return progress;
 }
 
-// ── Media-query hooks ────────────────────────────────────────────────────
-// Mobile = below Tailwind's `md` breakpoint (768px). Keeping this number
-// in sync with the `md:` utilities used for mobile fallbacks.
-function useIsMobile(breakpoint = 768) {
-  const [isMobile, setIsMobile] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia(`(max-width: ${breakpoint - 1}px)`).matches;
-  });
-  useEffect(() => {
-    const mq = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
-    const onChange = (e) => setIsMobile(e.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, [breakpoint]);
-  return isMobile;
-}
-
-function usePrefersReducedMotion() {
-  const [reduced, setReduced] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  });
-  useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const onChange = (e) => setReduced(e.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, []);
-  return reduced;
-}
 
 // ── Icons (inline SVG to avoid a dependency) ──────────────────────────────
 
@@ -1561,13 +1545,16 @@ function MobileCard({ project, live, onLaunch, onWake, onIOSLaunch }) {
 
   return (
     <article className="relative rounded-2xl overflow-hidden shadow-lg ring-1 ring-black/5 bg-white">
-      <div className="relative h-44 overflow-hidden">
-        <ProjectScene project={project} />
+      <div
+        className="relative h-44 overflow-hidden"
+        style={{ background: project.color }}
+      >
         {project.scene && (
           <img
             src={project.scene}
             alt=""
             loading="lazy"
+            decoding="async"
             className="absolute inset-0 h-full w-full object-cover"
             style={{ objectPosition: project.scenePosition || "center 55%" }}
             onError={(e) => {
@@ -1674,11 +1661,11 @@ export default function Launcher() {
   const [expanded, setExpanded] = useState(0);
   const scrollProgress = useScrollProgress(400);
   const projectsRef = useRef(null);
-  const isMobile = useIsMobile();
-  const prefersReducedMotion = usePrefersReducedMotion();
+  const lowPower = useLowPower();
   // Heavy effects (sparkle particle field, drifting birds) are desktop-only —
-  // mobile gets a static background so the page feels responsive.
-  const heavyFX = !isMobile && !prefersReducedMotion;
+  // mobile and reduced-motion get a static background so the page feels
+  // responsive instead of laggy.
+  const heavyFX = !lowPower;
 
   const launch = (p) => {
     const target = p.prodUrl ?? p.url;
@@ -1793,18 +1780,22 @@ export default function Launcher() {
               Full-Stack <span className="mx-2 text-[#1b4b75]/60">|</span> AI Agents <span className="mx-2 text-[#1b4b75]/60">|</span> Product Engineering
             </p>
 
-            {/* Typewriter tagline */}
+            {/* Tagline — typewriter on desktop, static on mobile/reduced-motion */}
             <div className="mt-10 inline-flex items-center gap-2 rounded-full bg-white/80 backdrop-blur-sm px-5 py-2.5 shadow-sm ring-1 ring-zinc-200/80">
               <span className="text-sm font-medium text-zinc-700 min-h-[1.25em]">
-                <Typewriter
-                  phrases={[
-                    "Building with AI agents",
-                    "Shipping full-stack products",
-                    "Building what couldn't exist last year",
-                    "Integrating tools end-to-end",
-                    "Chasing the bleeding edge",
-                  ]}
-                />
+                {lowPower ? (
+                  "Building with AI agents"
+                ) : (
+                  <Typewriter
+                    phrases={[
+                      "Building with AI agents",
+                      "Shipping full-stack products",
+                      "Building what couldn't exist last year",
+                      "Integrating tools end-to-end",
+                      "Chasing the bleeding edge",
+                    ]}
+                  />
+                )}
               </span>
               <span className="text-indigo-500">{icons.sparkle}</span>
             </div>

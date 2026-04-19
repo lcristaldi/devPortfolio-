@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useLowPower } from "../hooks/useLowPower.js";
 
 // ── Timeline entries (newest on top) ──────────────────────────────────────
 const ENTRIES = [
@@ -82,9 +83,13 @@ const CapIcon = ({ color }) => (
 // ── One row: dot on line + card on alternating side ──────────────────────
 function TimelineRow({ entry, index }) {
   const rowRef = useRef(null);
-  const [visible, setVisible] = useState(false);
+  const lowPower = useLowPower();
+  // On mobile / reduced-motion, skip the IntersectionObserver and reveal
+  // animations entirely — render the row visible from first paint.
+  const [visible, setVisible] = useState(lowPower);
 
   useEffect(() => {
+    if (lowPower) return;
     if (!rowRef.current) return;
     const obs = new IntersectionObserver(
       (items) => {
@@ -99,7 +104,7 @@ function TimelineRow({ entry, index }) {
     );
     obs.observe(rowRef.current);
     return () => obs.disconnect();
-  }, []);
+  }, [lowPower]);
 
   const isLeft = index % 2 === 0;
   const Icon = entry.kind === "school" ? CapIcon : BriefcaseIcon;
@@ -205,8 +210,14 @@ function TimelineRow({ entry, index }) {
 // ── Scroll-synced progress line ──────────────────────────────────────────
 function useLineProgress(ref) {
   const [progress, setProgress] = useState(0);
+  const lowPower = useLowPower();
 
   useEffect(() => {
+    // On mobile, just paint the full line — no scroll listener at all.
+    if (lowPower) {
+      setProgress(1);
+      return;
+    }
     if (!ref.current) return;
     let rafId = 0;
     const compute = () => {
@@ -231,7 +242,7 @@ function useLineProgress(ref) {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", compute);
     };
-  }, [ref]);
+  }, [ref, lowPower]);
 
   return progress;
 }

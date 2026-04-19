@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useLowPower } from "../hooks/useLowPower.js";
 
 // ── Painterly brush-stroke background ─────────────────────────────────────
 // Uses layered SVG paths with turbulence+displacement filters to mimic
@@ -160,9 +161,15 @@ export default function BrushStrokes({
   seed = 1,
   className = "",
 }) {
+  const lowPower = useLowPower();
   const hostRef = useRef(null);
   const [revealed, setRevealed] = useState(false);
   const [scrollY, setScrollY] = useState(0);
+
+  // feTurbulence + displacement + mix-blend across every section is the
+  // single biggest perf hit on iOS Safari — skip the whole thing on mobile
+  // and for prefers-reduced-motion.
+  if (lowPower) return null;
 
   // Reveal on viewport entry
   useEffect(() => {

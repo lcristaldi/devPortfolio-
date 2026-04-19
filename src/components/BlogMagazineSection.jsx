@@ -1,23 +1,8 @@
-import React, { forwardRef, useEffect, useImperativeHandle, useRef, useState } from "react";
+import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import HTMLFlipBook from "react-pageflip";
 import { BLOGS } from "../blogs.js";
 import avatarSrc from "../assets/danny.png";
-
-// Matches the `md` breakpoint used elsewhere — react-pageflip's 400px cover
-// gets clipped on phones, so below `md` we render a simple stacked list.
-function useIsMobile(breakpoint = 768) {
-  const [isMobile, setIsMobile] = useState(() => {
-    if (typeof window === "undefined") return false;
-    return window.matchMedia(`(max-width: ${breakpoint - 1}px)`).matches;
-  });
-  useEffect(() => {
-    const mq = window.matchMedia(`(max-width: ${breakpoint - 1}px)`);
-    const onChange = (e) => setIsMobile(e.matches);
-    mq.addEventListener("change", onChange);
-    return () => mq.removeEventListener("change", onChange);
-  }, [breakpoint]);
-  return isMobile;
-}
+import { useIsMobile } from "../hooks/useLowPower.js";
 
 const COVER_SRC = "/assets/blog-cover.jpg";
 

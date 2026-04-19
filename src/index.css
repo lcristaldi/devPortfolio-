@@ -217,6 +217,29 @@ body {
   }
 }
 
+/* Kill infinite marquees + drifts on mobile and reduced-motion — they keep
+   the GPU pegged on iOS Safari even when off-screen. */
+@media (max-width: 767px), (prefers-reduced-motion: reduce) {
+  .animate-scroll-left,
+  .animate-scroll-right {
+    animation: none;
+    transform: translateX(0);
+  }
+  .bird-wing-up,
+  .bird-wing-down,
+  .bird-drift-a,
+  .bird-drift-b,
+  .bird-drift-c {
+    animation: none;
+  }
+  .scroll-hint {
+    animation: none;
+  }
+  .animate-float-slow {
+    animation: none;
+  }
+}
+
 /* ── Magazine flip-book ─────────────────────────────────────────────── */
 
 .magazine-shadow {
