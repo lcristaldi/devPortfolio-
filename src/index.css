@@ -1,0 +1,253 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Lulo Clean One Bold (local + bundled) ───────────────────────────── */
+@font-face {
+  font-family: "Lulo Clean One Bold";
+  src: local("Lulo Clean W01 One Bold"),
+       local("LuloCleanW01-OneBold"),
+       local("Lulo Clean One Bold"),
+       local("LuloCleanOneBold"),
+       url("/fonts/lulo-clean-one-bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+html, body, #root { height: 100%; }
+body {
+  margin: 0;
+  background: #fafafa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Floating avatar ─────────────────────────────────────────────────── */
+
+.avatar-float {
+  position: fixed;
+  top: 1.25rem;
+  left: 1.5rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  pointer-events: none;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+@media (min-width: 1024px) {
+  .avatar-float {
+    display: none;
+  }
+}
+
+.avatar-float[data-visible="false"] {
+  opacity: 0;
+  transform: translateY(-8px) scale(0.9);
+}
+
+.avatar-float[data-visible="true"] {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+.avatar-float img {
+  width: 44px;
+  height: 44px;
+  border-radius: 9999px;
+  object-fit: cover;
+  object-position: center 28%;
+  border: 2px solid white;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.1), 0 0 0 1px rgba(0,0,0,0.04);
+}
+
+.avatar-float span {
+  font-size: 11px;
+  font-weight: 600;
+  color: #71717a;
+  letter-spacing: 0.04em;
+}
+
+/* ── Hero section ────────────────────────────────────────────────────── */
+
+.hero-gradient {
+  background:
+    radial-gradient(ellipse at 30% 20%, rgba(99,102,241,0.06) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 80%, rgba(244,114,182,0.05) 0%, transparent 50%);
+}
+
+/* ── Scroll indicator bounce ─────────────────────────────────────────── */
+
+@keyframes gentleBounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+.scroll-hint {
+  animation: gentleBounce 2s ease-in-out infinite;
+}
+
+/* ── Tech carousel ───────────────────────────────────────────────────── */
+
+@keyframes scrollLeft {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-33.333%); }
+}
+
+@keyframes scrollRight {
+  0% { transform: translateX(-33.333%); }
+  100% { transform: translateX(0); }
+}
+
+.animate-scroll-left {
+  animation: scrollLeft 35s linear infinite;
+}
+
+.animate-scroll-right {
+  animation: scrollRight 35s linear infinite;
+}
+
+.animate-scroll-left:hover,
+.animate-scroll-right:hover {
+  animation-play-state: paused;
+}
+
+/* ── Painterly birds ─────────────────────────────────────────────────── */
+
+/* Wing-flap: keep "up" visible ~85% of the cycle, snap "down" for 15% */
+@keyframes wingFlap {
+  0%,
+  80%,
+  100% {
+    opacity: 1;
+  }
+  85%,
+  95% {
+    opacity: 0;
+  }
+}
+
+@keyframes wingFlapInverse {
+  0%,
+  80%,
+  100% {
+    opacity: 0;
+  }
+  85%,
+  95% {
+    opacity: 1;
+  }
+}
+
+.bird-wing-up {
+  animation: wingFlap 1.4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.bird-wing-down {
+  animation: wingFlapInverse 1.4s ease-in-out infinite;
+  transform-origin: center;
+}
+
+/* Three distinct gentle drift arcs — keep motion small and organic */
+@keyframes birdDriftA {
+  0% {
+    transform: translate(0, 0) rotate(-2deg);
+  }
+  50% {
+    transform: translate(24px, -18px) rotate(3deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(-2deg);
+  }
+}
+
+@keyframes birdDriftB {
+  0% {
+    transform: translate(0, 0) rotate(2deg);
+  }
+  50% {
+    transform: translate(-20px, -12px) rotate(-3deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(2deg);
+  }
+}
+
+@keyframes birdDriftC {
+  0% {
+    transform: translate(0, 0) rotate(-1deg);
+  }
+  33% {
+    transform: translate(12px, -22px) rotate(2deg);
+  }
+  66% {
+    transform: translate(-8px, -10px) rotate(-3deg);
+  }
+  100% {
+    transform: translate(0, 0) rotate(-1deg);
+  }
+}
+
+.bird-drift-a {
+  animation: birdDriftA 9s ease-in-out infinite;
+}
+.bird-drift-b {
+  animation: birdDriftB 11s ease-in-out infinite;
+}
+.bird-drift-c {
+  animation: birdDriftC 13s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bird-wing-up,
+  .bird-wing-down,
+  .bird-drift-a,
+  .bird-drift-b,
+  .bird-drift-c {
+    animation: none;
+  }
+}
+
+/* ── Magazine flip-book ─────────────────────────────────────────────── */
+
+.magazine-shadow {
+  filter: drop-shadow(0 28px 36px rgba(40, 28, 16, 0.25))
+    drop-shadow(0 6px 10px rgba(40, 28, 16, 0.12));
+}
+
+.magazine-flipbook .page {
+  background: #fbf6ec;
+  overflow: hidden;
+}
+
+.magazine-flipbook .page.--hard {
+  background: transparent;
+}
+
+/* ── Brush-stroke idle breathing ─────────────────────────────────────── */
+
+@keyframes brushBreath {
+  0%,
+  100% {
+    transform: scale(1) translateZ(0);
+  }
+  50% {
+    transform: scale(1.015) translateZ(0);
+  }
+}
+
+.brush-breath {
+  animation: brushBreath 18s ease-in-out infinite;
+  transform-origin: center;
+  will-change: transform;
+}
+

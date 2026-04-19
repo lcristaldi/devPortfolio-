@@ -1,0 +1,38 @@
+{
+  "name": "danny-portfolio",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Portfolio of Danny Montoya — a painterly bookshelf of projects plus a small magazine of writing.",
+  "author": {
+    "name": "Danny Montoya",
+    "email": "dfmreyes02@gmail.com"
+  },
+  "license": "UNLICENSED",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "heartbeat": "node server/heartbeat.js",
+    "prestart": "lsof -ti:4317 -ti:5180 | xargs kill -9 2>/dev/null; exit 0",
+    "start": "concurrently -k \"npm:heartbeat\" \"npm:dev\""
+  },
+  "dependencies": {
+    "@tsparticles/engine": "^3.9.1",
+    "@tsparticles/react": "^3.0.0",
+    "@tsparticles/slim": "^3.9.1",
+    "framer-motion": "^12.38.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-pageflip": "^2.0.3"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.1",
+    "autoprefixer": "^10.4.19",
+    "concurrently": "^9.0.1",
+    "postcss": "^8.4.41",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^3.4.10",
+    "vite": "^5.4.2"
+  }
+}

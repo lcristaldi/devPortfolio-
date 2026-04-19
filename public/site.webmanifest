@@ -1,0 +1,12 @@
+{
+  "name": "Danny Montoya",
+  "short_name": "Danny",
+  "description": "Portfolio of Danny Montoya.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1f1916",
+  "theme_color": "#1f1916",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ]
+}
