@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom/client";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import Launcher from "./Launcher.jsx";
 import BuildingBookshelfPost from "./blog-posts/BuildingBookshelfPost.jsx";
 import AIDrivenUIUXPost from "./blog-posts/AIDrivenUIUXPost.jsx";
@@ -37,5 +39,7 @@ function App() {
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <App />
+    <Analytics />
+    <SpeedInsights />
   </React.StrictMode>
 );
