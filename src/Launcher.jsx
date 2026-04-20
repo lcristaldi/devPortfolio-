@@ -965,7 +965,7 @@ function ProjectScene({ project }) {
 function Card({ project, live, expanded, onHover, onLaunch, onWake, onIOSLaunch }) {
   const isRemote = project.type === "web-remote";
   const isIOS = project.type === "ios-appetize";
-  const isLive = isRemote || live;
+  const isLive = isRemote || !!project.prodUrl || live;
 
   return (
     <div
@@ -1276,7 +1276,7 @@ function Card({ project, live, expanded, onHover, onLaunch, onWake, onIOSLaunch 
             {project.name}
           </span>
 
-          <StatusPill live={live} remote={isRemote} iosDemo={isIOS} />
+          <StatusPill live={isLive} remote={isRemote} iosDemo={isIOS} />
         </div>
       </div>
 
@@ -1347,7 +1347,7 @@ function Card({ project, live, expanded, onHover, onLaunch, onWake, onIOSLaunch 
 
           {/* Status pill — top right corner */}
           <div className="absolute top-4 right-4">
-            <StatusPill live={live} remote={isRemote} iosDemo={isIOS} />
+            <StatusPill live={isLive} remote={isRemote} iosDemo={isIOS} />
           </div>
         </div>
 
@@ -1541,7 +1541,7 @@ function MobileNav({ onSelect }) {
 function MobileCard({ project, live, onLaunch, onWake, onIOSLaunch }) {
   const isRemote = project.type === "web-remote";
   const isIOS = project.type === "ios-appetize";
-  const isLive = isRemote || live;
+  const isLive = isRemote || !!project.prodUrl || live;
 
   return (
     <article className="relative rounded-2xl overflow-hidden shadow-lg ring-1 ring-black/5 bg-white">
@@ -1564,7 +1564,7 @@ function MobileCard({ project, live, onLaunch, onWake, onIOSLaunch }) {
         )}
         <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/10 to-black/25" />
         <div className="absolute top-3 right-3">
-          <StatusPill live={live} remote={isRemote} iosDemo={isIOS} />
+          <StatusPill live={isLive} remote={isRemote} iosDemo={isIOS} />
         </div>
         <div className="absolute bottom-3 left-4 right-4 text-white">
           <h3 className="font-editorial text-2xl font-semibold drop-shadow-[0_2px_6px_rgba(0,0,0,0.5)]">
