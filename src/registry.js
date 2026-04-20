@@ -19,7 +19,7 @@ export const PROJECTS = [
     startCmd: "npm run dev",
     port: 3000,
     url: "http://localhost:3000",
-    prodUrl: null,
+    prodUrl: "https://homesprint-three.vercel.app/",
     githubUrl: "#", // TODO: fill in real GitHub URL
     processHint: "next dev",
     preview: "/previews/homesprint.mp4",
@@ -119,6 +119,7 @@ export const PROJECTS = [
     startCmd: "npm run dev",
     port: 1420,
     url: "http://localhost:1420",
+    prodUrl: "https://vinylsheetz-archive.vercel.app/",
     githubUrl: "#", // TODO: fill in real GitHub URL
     processHint: "vite.*1420",
     preview: "/previews/vinylsheetz.mp4",
