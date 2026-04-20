@@ -1680,9 +1680,9 @@ export default function Launcher() {
     await wakeUp(p.id);
   };
 
-  const liveCount =
-    PROJECTS.filter((p) => p.type === "web-remote").length +
-    Object.values(status).filter((s) => s?.live).length;
+  const liveCount = PROJECTS.filter(
+    (p) => p.type === "web-remote" || p.type === "ios-appetize" || p.prodUrl || status[p.id]?.live
+  ).length;
 
   const scrollToProjects = () => {
     projectsRef.current?.scrollIntoView({ behavior: "smooth" });
