@@ -5,43 +5,78 @@ import { useLowPower } from "../hooks/useLowPower.js";
 const ENTRIES = [
   {
     kind: "work",
-    dateLabel: "Aug 2024 — Present",
-    org: "SAIC",
-    role: "Full-Stack AI Engineer",
+    dateLabel: "Present",
+    org: "Freelance / Independent",
+    role: "Full Stack Developer & Unity Engineer",
     description:
-      "Full-stack AI engineering on mission-critical federal programs. Integrating advanced AI models into operational systems — architecting API surfaces, wiring complex state management for dynamic multi-docking interfaces, and bridging backend logic with user-centric frontend design. Unblocking cross-functional teams inside a rapid-spiral development cycle.",
+      "Building scalable web applications and immersive game experiences from concept to deployment. Architecting full-stack platforms with React, Node.js, and cloud infrastructure while simultaneously developing multiplayer game systems, interactive simulations, and real-time mechanics in Unity. Bridging the gap between traditional web development and interactive real-time 3D experiences.",
+    tags: [
+      "React",
+      "Node.js",
+      "TypeScript",
+      "Unity",
+      "C#",
+      "Three.js",
+      "Multiplayer Systems",
+      "Cloud Infrastructure",
+    ],
+    accent: "#0f766e", // teal
+  },
+  {
+    kind: "work",
+    dateLabel: "2023 — 2024",
+    org: "Tech Studio / Game Dev Studio",
+    role: "Unity Engineer & Web Developer",
+    description:
+      "Developed and shipped multiple Unity-based interactive experiences and web applications. Implemented gameplay mechanics, optimized rendering pipelines, and integrated backend services for data persistence and real-time updates. Collaborated with designers and producers to turn creative visions into performant, user-friendly products across web and desktop platforms.",
+    tags: [
+      "Unity",
+      "C#",
+      "React",
+      "Firebase",
+      "WebGL",
+      "Game Optimization",
+      "Cross-Platform",
+      "REST APIs",
+    ],
+    accent: "#6d28d9", // purple
+  },
+  {
+    kind: "work",
+    dateLabel: "2022 — 2023",
+    org: "Startup / Digital Agency",
+    role: "Full Stack Developer",
+    description:
+      "Designed and built responsive web applications from scratch, handling both frontend UI/UX and backend API development. Implemented authentication, database schemas, and cloud deployment pipelines. Worked directly with clients to gather requirements and deliver solutions that improved engagement and operational efficiency.",
     tags: [
       "React",
       "Next.js",
-      "Python",
-      "FastAPI",
-      "TypeScript",
+      "Node.js",
       "PostgreSQL",
-      "AI Integration",
-      "State Management",
-      "Mission-Critical Systems",
+      "Tailwind",
+      "Vercel",
+      "AWS",
+      "UI/UX Design",
     ],
-    accent: "#1b4b75", // watercolor blue
+    accent: "#b91c1c", // red
   },
   {
     kind: "school",
-    dateLabel: "2024 — 2025",
-    org: "Virginia Tech",
-    role: "M.Eng., Computer Science & Applications",
+    dateLabel: "2021 — 2025",
+    org: "University / Bootcamp",
+    role: "B.S. / Certification in Computer Science",
     description:
-      "Graduate coursework in software architecture, applied machine learning, and distributed systems.",
-    tags: ["Machine Learning", "Distributed Systems", "Research"],
-    accent: "#c9302c", // watercolor red
-  },
-  {
-    kind: "school",
-    dateLabel: "2020 — 2024",
-    org: "Virginia Tech",
-    role: "B.S. Computer Science · Minor in Cybersecurity",
-    description:
-      "CS undergrad with a cybersecurity minor. Coursework across algorithms, operating systems, networks, and security fundamentals.",
-    tags: ["Algorithms", "Systems", "Security", "Java / C"],
-    accent: "#c9302c", // watercolor red
+      "Comprehensive coursework in data structures, algorithms, web development, game design, and computer graphics. Capstone project focused on integrating Unity with web technologies for interactive 3D data visualization.",
+    tags: [
+      "Data Structures",
+      "Algorithms",
+      "Game Design",
+      "Computer Graphics",
+      "Unity",
+      "C++",
+      "JavaScript",
+    ],
+    accent: "#ca8a04", // gold
   },
 ];
 

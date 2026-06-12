@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { PROJECTS } from "./registry.js";
-import avatarSrc from "./assets/danny.png";
-import dannyIllustratedSrc from "./assets/danny-illustrated.png";
+import avatarSrc from "./assets/Danny.png";
+import DannyIllustratedSrc from "./assets/Danny-illustrated.png";
 import deskSrc from "./assets/desk.png";
 import { SparklesCore } from "./components/Sparkles.jsx";
 import TechCarousel from "./components/TechCarousel.jsx";
@@ -78,35 +78,42 @@ function AboutSection() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           {/* Left: paragraph */}
+
           <div className="space-y-5 text-lg text-zinc-600 leading-relaxed">
             <p>
-              Full-Stack Engineer by day, Data Architect by night, and{" "}
-              <span className="font-semibold" style={{ color: "#991b1b" }}>
-                Hokie for life
+              <span className="font-semibold" style={{ color: "#0f766e" }}>
+                Full-Stack Developer by profession, Unity Engineer by passion
               </span>
-              . With a Master&apos;s degree and a deep focus on{" "}
-              <span className="font-semibold" style={{ color: "#4338ca" }}>
-                AI-driven UI/UX
-              </span>
-              , I specialize in modernizing the way we interact with massive datasets.
-              My current work revolves around overhauling federal targeting systems —
-              merging server-side logic with sleek, docked-menu interfaces to make AI
-              insights move at the speed of thought.
+              , and lifelong builder at heart. I specialize in creating scalable web
+              applications, interactive experiences, and game systems that bridge
+              creativity with technology. From architecting{" "}
+              <span className="font-semibold" style={{ color: "#2563eb" }}>
+                backend services and APIs
+              </span>{" "}
+              to crafting responsive frontends and immersive gameplay mechanics, I enjoy
+              turning ambitious ideas into products people love to use.
             </p>
             <p>
-              I believe the best way to predict the future is to build a dashboard for it.
-              That&apos;s why I launched{" "}
-              <span className="font-semibold" style={{ color: "#6b21a8" }}>
-                Sam Intel
+              My work spans modern web technologies, cloud infrastructure, databases, and{" "}
+              <span className="font-semibold" style={{ color: "#b91c1c" }}>
+                Unity-powered game development
               </span>
-              , a specialized intel tool that uses OpenAI embeddings and pgvector to
-              map the federal landscape. I don&apos;t just &ldquo;write code&rdquo;;
-              I build autonomous systems that solve real-world leverage problems.
-              If it involves{" "}
-              <span className="font-semibold" style={{ color: "#065f46" }}>
-                React, Python, or Large Language Models
+              . Whether I'm building full-stack platforms, multiplayer game systems, or
+              integrating cutting-edge tech, I focus on{" "}
+              <span className="font-semibold" style={{ color: "#6d28d9" }}>
+                clean architecture, performance, and user experience
               </span>
-              , I&apos;m in my element.
+              . Great software isn't just written — it's engineered to solve real
+              problems, scale gracefully, and create meaningful impact.
+            </p>
+            <p>
+              I'm driven by curiosity, fueled by challenges, and passionate about
+              building what didn't exist yesterday. If it involves{" "}
+              <span className="font-semibold" style={{ color: "#ca8a04" }}>
+                software, games, automation, or innovative digital experiences
+              </span>
+              , you'll find me creating, optimizing, and pushing the boundaries of what's
+              possible.
             </p>
           </div>
 
@@ -125,7 +132,7 @@ function AboutSection() {
                   className="absolute inset-0 w-full h-full object-contain"
                 />
                 <img
-                  src={dannyIllustratedSrc}
+                  src={DannyIllustratedSrc}
                   alt="Illustration of Danny"
                   loading="lazy"
                   decoding="async"
@@ -348,16 +355,14 @@ function StatusPill({ live, remote, iosDemo }) {
   }
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-medium ring-1 ${
-        live
+      className={`inline-flex items-center gap-1.5 rounded-full px-2.5 py-0.5 text-[11px] font-medium ring-1 ${live
           ? "bg-emerald-50 text-emerald-700 ring-emerald-200/60"
           : "bg-zinc-100 text-zinc-500 ring-zinc-200/60"
-      }`}
+        }`}
     >
       <span
-        className={`h-1.5 w-1.5 rounded-full ${
-          live ? "bg-emerald-500 animate-pulse" : "bg-zinc-400"
-        }`}
+        className={`h-1.5 w-1.5 rounded-full ${live ? "bg-emerald-500 animate-pulse" : "bg-zinc-400"
+          }`}
       />
       {live ? "Live" : "Offline"}
     </span>
@@ -970,9 +975,8 @@ function Card({ project, live, expanded, onHover, onLaunch, onWake, onIOSLaunch 
   return (
     <div
       onMouseEnter={onHover}
-      className={`group relative cursor-pointer overflow-hidden transition-all duration-500 ease-in-out ${
-        expanded ? "rounded-3xl" : "rounded-t-[10px] rounded-b-[3px]"
-      }`}
+      className={`group relative cursor-pointer overflow-hidden transition-all duration-500 ease-in-out ${expanded ? "rounded-3xl" : "rounded-t-[10px] rounded-b-[3px]"
+        }`}
       style={{
         width: expanded ? "24rem" : "7rem",
         height: "42rem",
@@ -983,9 +987,8 @@ function Card({ project, live, expanded, onHover, onLaunch, onWake, onIOSLaunch 
     >
       {/* ── Closed: painterly book spine (Ghibli / clothbound) ──────── */}
       <div
-        className={`absolute inset-0 transition-opacity duration-500 ${
-          expanded ? "opacity-0 pointer-events-none" : "opacity-100"
-        }`}
+        className={`absolute inset-0 transition-opacity duration-500 ${expanded ? "opacity-0 pointer-events-none" : "opacity-100"
+          }`}
       >
         {/* Base pigment wash */}
         <div
@@ -1282,9 +1285,8 @@ function Card({ project, live, expanded, onHover, onLaunch, onWake, onIOSLaunch 
 
       {/* ── Expanded: painted scene — full card background ──────────── */}
       <div
-        className={`absolute inset-0 transition-opacity duration-500 ${
-          expanded ? "opacity-100" : "opacity-0 pointer-events-none"
-        }`}
+        className={`absolute inset-0 transition-opacity duration-500 ${expanded ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}
       >
         {/* SVG fallback scene (behind image) */}
         <ProjectScene project={project} />
@@ -1311,9 +1313,8 @@ function Card({ project, live, expanded, onHover, onLaunch, onWake, onIOSLaunch 
 
       {/* ── Expanded content ───────────────────────────────────────── */}
       <div
-        className={`relative flex h-full flex-col justify-between p-6 transition-all duration-500 ${
-          expanded ? "opacity-100 delay-150" : "opacity-0 pointer-events-none"
-        }`}
+        className={`relative flex h-full flex-col justify-between p-6 transition-all duration-500 ${expanded ? "opacity-100 delay-150" : "opacity-0 pointer-events-none"
+          }`}
       >
         <div className="text-center">
           {/* Title */}
@@ -1394,57 +1395,57 @@ function Card({ project, live, expanded, onHover, onLaunch, onWake, onIOSLaunch 
             </div>
           </div>
         ) : (
-        <div className="flex items-center justify-center gap-3">
-          {project.prodUrl ? (
-            <a
-              href={project.prodUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="group relative z-0 inline-flex items-center gap-2 overflow-hidden rounded-full bg-white px-6 py-3 text-base font-semibold text-zinc-900 shadow-xl ring-1 ring-black/5 transition-all duration-500 before:absolute before:inset-0 before:-z-10 before:translate-x-[150%] before:translate-y-[150%] before:scale-[2.5] before:rounded-[100%] before:bg-zinc-900 before:transition-transform before:duration-700 before:content-[''] hover:-translate-y-0.5 hover:text-white hover:shadow-2xl hover:before:translate-x-0 hover:before:translate-y-0 active:scale-[0.97]"
-            >
-              Visit Site
-              {icons.arrow}
-            </a>
-          ) : isLive ? (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                onLaunch(project);
-              }}
-              className="group relative z-0 inline-flex items-center gap-2 overflow-hidden rounded-full bg-white px-6 py-3 text-base font-semibold text-zinc-900 shadow-xl ring-1 ring-black/5 transition-all duration-500 before:absolute before:inset-0 before:-z-10 before:translate-x-[150%] before:translate-y-[150%] before:scale-[2.5] before:rounded-[100%] before:bg-zinc-900 before:transition-transform before:duration-700 before:content-[''] hover:-translate-y-0.5 hover:text-white hover:shadow-2xl hover:before:translate-x-0 hover:before:translate-y-0 active:scale-[0.97]"
-            >
-              Launch Demo
-              {icons.arrow}
-            </button>
-          ) : (
-            <button
-              onClick={async (e) => {
-                e.stopPropagation();
-                onWake(project);
-              }}
-              className="group relative z-0 inline-flex items-center gap-2 overflow-hidden rounded-full bg-amber-100 px-6 py-3 text-base font-semibold text-amber-900 shadow-xl ring-1 ring-amber-300 transition-all duration-500 before:absolute before:inset-0 before:-z-10 before:translate-x-[150%] before:translate-y-[150%] before:scale-[2.5] before:rounded-[100%] before:bg-amber-900 before:transition-transform before:duration-700 before:content-[''] hover:-translate-y-0.5 hover:text-amber-50 hover:shadow-2xl hover:before:translate-x-0 hover:before:translate-y-0 active:scale-[0.97]"
-            >
-              {icons.zap}
-              Wake Up
-            </button>
-          )}
+          <div className="flex items-center justify-center gap-3">
+            {project.prodUrl ? (
+              <a
+                href={project.prodUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="group relative z-0 inline-flex items-center gap-2 overflow-hidden rounded-full bg-white px-6 py-3 text-base font-semibold text-zinc-900 shadow-xl ring-1 ring-black/5 transition-all duration-500 before:absolute before:inset-0 before:-z-10 before:translate-x-[150%] before:translate-y-[150%] before:scale-[2.5] before:rounded-[100%] before:bg-zinc-900 before:transition-transform before:duration-700 before:content-[''] hover:-translate-y-0.5 hover:text-white hover:shadow-2xl hover:before:translate-x-0 hover:before:translate-y-0 active:scale-[0.97]"
+              >
+                Visit Site
+                {icons.arrow}
+              </a>
+            ) : isLive ? (
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onLaunch(project);
+                }}
+                className="group relative z-0 inline-flex items-center gap-2 overflow-hidden rounded-full bg-white px-6 py-3 text-base font-semibold text-zinc-900 shadow-xl ring-1 ring-black/5 transition-all duration-500 before:absolute before:inset-0 before:-z-10 before:translate-x-[150%] before:translate-y-[150%] before:scale-[2.5] before:rounded-[100%] before:bg-zinc-900 before:transition-transform before:duration-700 before:content-[''] hover:-translate-y-0.5 hover:text-white hover:shadow-2xl hover:before:translate-x-0 hover:before:translate-y-0 active:scale-[0.97]"
+              >
+                Launch Demo
+                {icons.arrow}
+              </button>
+            ) : (
+              <button
+                onClick={async (e) => {
+                  e.stopPropagation();
+                  onWake(project);
+                }}
+                className="group relative z-0 inline-flex items-center gap-2 overflow-hidden rounded-full bg-amber-100 px-6 py-3 text-base font-semibold text-amber-900 shadow-xl ring-1 ring-amber-300 transition-all duration-500 before:absolute before:inset-0 before:-z-10 before:translate-x-[150%] before:translate-y-[150%] before:scale-[2.5] before:rounded-[100%] before:bg-amber-900 before:transition-transform before:duration-700 before:content-[''] hover:-translate-y-0.5 hover:text-amber-50 hover:shadow-2xl hover:before:translate-x-0 hover:before:translate-y-0 active:scale-[0.97]"
+              >
+                {icons.zap}
+                Wake Up
+              </button>
+            )}
 
-          {project.githubUrl && (
-            <a
-              href={project.githubUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="group/gh inline-flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-3 text-base font-semibold text-white shadow-xl transition-all hover:-translate-y-0.5 hover:bg-black hover:shadow-2xl active:scale-[0.97]"
-            >
-              <span className="inline-flex transition-transform duration-500 group-hover/gh:rotate-[360deg] group-hover/gh:scale-110">
-                {icons.github}
-              </span>
-              GitHub
-            </a>
-          )}
-        </div>
+            {project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                className="group/gh inline-flex items-center gap-2 rounded-full bg-zinc-900 px-5 py-3 text-base font-semibold text-white shadow-xl transition-all hover:-translate-y-0.5 hover:bg-black hover:shadow-2xl active:scale-[0.97]"
+              >
+                <span className="inline-flex transition-transform duration-500 group-hover/gh:rotate-[360deg] group-hover/gh:scale-110">
+                  {icons.github}
+                </span>
+                GitHub
+              </a>
+            )}
+          </div>
         )}
       </div>
     </div>
@@ -1772,12 +1773,12 @@ export default function Launcher() {
             }}
           >
             <h1 className="font-display uppercase text-[#1b4b75] leading-[1.1] tracking-[-0.02em] text-4xl md:text-5xl lg:text-[5.25rem]">
-              <span className="block">Danny</span>
-              <span className="block">Montoya</span>
+              <span className="block">Naro</span>
+              <span className="block">Katoshi</span>
             </h1>
 
             <p className="mt-6 font-display uppercase tracking-[0.02em] text-[#1b4b75] text-xs md:text-sm">
-              Full-Stack <span className="mx-2 text-[#1b4b75]/60">|</span> AI Agents <span className="mx-2 text-[#1b4b75]/60">|</span> Product Engineering
+              Full-Stack <span className="mx-2 text-[#1b4b75]/60">|</span> AI Agents <span className="mx-2 text-[#1b4b75]/60">|</span> Unity Engineering
             </p>
 
             {/* Tagline — typewriter on desktop, static on mobile/reduced-motion */}
@@ -1793,6 +1794,7 @@ export default function Launcher() {
                       "Building what couldn't exist last year",
                       "Integrating tools end-to-end",
                       "Chasing the bleeding edge",
+                      "Pushing the limits of Unity"
                     ]}
                   />
                 )}
@@ -1839,9 +1841,8 @@ export default function Launcher() {
           </p>
           <div className="mt-6 inline-flex items-center gap-2.5 rounded-full bg-white px-4 py-2 text-sm font-medium text-zinc-600 shadow-sm ring-1 ring-zinc-200/80">
             <span
-              className={`h-2 w-2 rounded-full ${
-                liveCount > 0 ? "bg-emerald-500 animate-pulse" : "bg-zinc-400"
-              }`}
+              className={`h-2 w-2 rounded-full ${liveCount > 0 ? "bg-emerald-500 animate-pulse" : "bg-zinc-400"
+                }`}
             />
             {liveCount}/{PROJECTS.length} systems online
           </div>

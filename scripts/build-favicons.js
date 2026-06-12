@@ -3,7 +3,7 @@
 import sharp from "sharp";
 import path from "node:path";
 
-const SRC = path.resolve("src/assets/danny.png"); // 1024x1536
+const SRC = path.resolve("src/assets/Danny.png"); // 1024x1536
 // Tight square around the face — the painted portrait's eyes sit ~y=270,
 // chin ~y=560, so this 870x870 crop keeps the whole head + bunny glasses.
 const FACE = { left: 75, top: 40, width: 870, height: 870 };

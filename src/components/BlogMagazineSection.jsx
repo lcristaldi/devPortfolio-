@@ -1,7 +1,7 @@
 import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import HTMLFlipBook from "react-pageflip";
 import { BLOGS } from "../blogs.js";
-import avatarSrc from "../assets/danny.png";
+import avatarSrc from "../assets/Danny.png";
 import { useIsMobile } from "../hooks/useLowPower.js";
 
 const COVER_SRC = "/assets/blog-cover.jpg";
@@ -40,10 +40,10 @@ const BackCover = forwardRef(function BackCover(_, ref) {
           <p className="mt-6 text-xs text-zinc-500 leading-relaxed max-w-[16rem] mx-auto">
             More entries arriving as I write them. Reach me at{" "}
             <a
-              href="mailto:dfmreyes02@gmail.com"
+              href="mailto:zakharovmaksym@gmail.com"
               className="font-mono text-zinc-700 underline decoration-zinc-300 decoration-1 underline-offset-2 transition-colors hover:text-zinc-900 hover:decoration-zinc-500"
             >
-              dfmreyes02@gmail.com
+              zakharovmaksym@gmail.com
             </a>{" "}
             if a piece sparks something.
           </p>
@@ -293,10 +293,10 @@ export const BlogMagazineSection = forwardRef(function BlogMagazineSection(
               <p className="mt-3 text-xs text-zinc-500 leading-relaxed">
                 More entries arriving as I write them. Reach me at{" "}
                 <a
-                  href="mailto:dfmreyes02@gmail.com"
+                  href="mailto:zakharovmaksym@gmail.com"
                   className="font-mono text-zinc-700 underline decoration-zinc-300 decoration-1 underline-offset-2 hover:text-zinc-900"
                 >
-                  dfmreyes02@gmail.com
+                  zakharovmaksym@gmail.com
                 </a>{" "}
                 if a piece sparks something.
               </p>

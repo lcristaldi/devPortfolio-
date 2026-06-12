@@ -1,5 +1,5 @@
 import React from "react";
-import avatarSrc from "../assets/danny.png";
+import avatarSrc from "../assets/Danny.png";
 
 const ACCENT = "#f0a868";       // warm amber for the dark theme
 const ACCENT_DIM = "#b87a3d";   // deeper amber for chips / borders
@@ -184,7 +184,7 @@ export default function SamIntelPostmortemPost() {
           />
           <div className="flex-1 leading-tight">
             <p className="font-mono text-[13px] font-semibold text-zinc-200">
-              danny@sam-intel:~$
+              Danny@sam-intel:~$
             </p>
             <p className="mt-0.5 font-mono text-[12px] text-zinc-500">
               <span>Mar 12, 2026</span>

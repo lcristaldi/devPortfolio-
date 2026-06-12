@@ -138,7 +138,7 @@ export default function ContactIcons() {
   return (
     <div className="flex items-start justify-center gap-6 md:gap-10">
       <IsoCube
-        href="https://github.com/dfmontoya02"
+        href="https://github.com/zakharovmaksym00-hub"
         label="GitHub"
         brand="#6e5494"
         iconType="github"
@@ -150,7 +150,7 @@ export default function ContactIcons() {
         iconType="linkedin"
       />
       <IsoCube
-        href="mailto:dfmreyes02@gmail.com"
+        href="mailto:zakharovmaksym@gmail.com"
         label="Email"
         brand="#c9302c"
         iconType="email"

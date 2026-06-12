@@ -1,4 +1,4 @@
-# Danny Montoya — Portfolio
+# Danny Katoshi — Portfolio
 
 A painterly bookshelf of projects, plus a small magazine of writing. Built as a single-page React app styled to feel more like a room than a resume.
 
@@ -58,4 +58,4 @@ public/
 
 ## License
 
-All content (writing, artwork, photos) is © Danny Montoya and is not licensed for redistribution. The code is intentionally unlicensed — feel free to read it, borrow ideas, but please don't ship a copy of this site.
+All content (writing, artwork, photos) is © Danny Katoshi and is not licensed for redistribution. The code is intentionally unlicensed — feel free to read it, borrow ideas, but please don't ship a copy of this site.
