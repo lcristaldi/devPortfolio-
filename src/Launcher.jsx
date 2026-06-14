@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { PROJECTS } from "./registry.js";
-import avatarSrc from "./assets/Danny.png";
+import avatarSrc from "./assets/danny.png";
 import DannyIllustratedSrc from "./assets/Danny-illustrated.png";
 import deskSrc from "./assets/desk.png";
 import { SparklesCore } from "./components/Sparkles.jsx";

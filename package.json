@@ -15,7 +15,7 @@
     "preview": "vite preview",
     "heartbeat": "node server/heartbeat.js",
     "prestart": "lsof -ti:4317 -ti:5180 | xargs kill -9 2>/dev/null; exit 0",
-    "start": "concurrently -k \"npm:heartbeat\" \"npm:dev\""
+    "start": "concurrently -k \"npm run heartbeat\" \"npm run dev\""
   },
   "dependencies": {
     "@tsparticles/engine": "^3.9.1",

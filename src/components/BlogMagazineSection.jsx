@@ -1,7 +1,7 @@
 import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import HTMLFlipBook from "react-pageflip";
 import { BLOGS } from "../blogs.js";
-import avatarSrc from "../assets/Danny.png";
+import avatarSrc from "../assets/danny.png";
 import { useIsMobile } from "../hooks/useLowPower.js";
 
 const COVER_SRC = "/assets/blog-cover.jpg";

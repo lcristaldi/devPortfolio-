@@ -1,5 +1,5 @@
 import React from "react";
-import avatarSrc from "../assets/Danny.png";
+import avatarSrc from "../assets/danny.png";
 
 const ORANGE = "#e0531c";        // vivid pulp orange
 const ORANGE_DEEP = "#b53b14";   // deeper red-orange for borders / shadows

@@ -1,6 +1,6 @@
 import React from "react";
 import BrushStrokes from "../components/BrushStrokes.jsx";
-import avatarSrc from "../assets/Danny.png";
+import avatarSrc from "../assets/danny.png";
 
 const goBack = (e) => {
   e.preventDefault();

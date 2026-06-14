@@ -1,4 +1,4 @@
-# Danny Katoshi — Portfolio
+# Naro Katoshi — Portfolio
 
 A painterly bookshelf of projects, plus a small magazine of writing. Built as a single-page React app styled to feel more like a room than a resume.
 

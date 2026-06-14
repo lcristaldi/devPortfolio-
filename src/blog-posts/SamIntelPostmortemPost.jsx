@@ -1,5 +1,5 @@
 import React from "react";
-import avatarSrc from "../assets/Danny.png";
+import avatarSrc from "../assets/danny.png";
 
 const ACCENT = "#f0a868";       // warm amber for the dark theme
 const ACCENT_DIM = "#b87a3d";   // deeper amber for chips / borders
