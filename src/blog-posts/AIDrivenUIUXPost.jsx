@@ -1,5 +1,5 @@
 import React from "react";
-import avatarSrc from "../assets/danny.png";
+import avatarSrc from "../assets/Danny.png";
 
 const ACCENT = "#546988";
 
