@@ -58,4 +58,4 @@ public/
 
 ## License
 
-All content (writing, artwork, photos) is © Danny Katoshi and is not licensed for redistribution. The code is intentionally unlicensed — feel free to read it, borrow ideas, but please don't ship a copy of this site.
+All content (writing, artwork, photos) is © Naro Katoshi and is not licensed for redistribution. The code is intentionally unlicensed — feel free to read it, borrow ideas, but please don't ship a copy of this site.
