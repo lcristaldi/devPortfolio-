@@ -36,3 +36,8 @@ Thumbs.db
 .turbo
 coverage
 *.tsbuildinfo
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
